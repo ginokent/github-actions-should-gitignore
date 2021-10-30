@@ -14,10 +14,14 @@ if [[ $# -le 0 ]]; then
   exit 1
 fi
 
+# shellcheck disable=SC2207
+declare -a UNIQ=( $( printf "%s\n" "$@" | sort -u ) )
+
 # shellcheck disable=SC2016
 Infoln 'Check that no files that should `gitignore` are committed.'
+Infoln ".gitignore files: ${UNIQ[*]}"
 
-for GITIGNORE in "$@"; do
+for GITIGNORE in "${UNIQ[@]}"; do
   Infoln "Check ${GITIGNORE:?}"
   if [[ ! -f "${GITIGNORE:?}" ]]; then
     Warnln "${GITIGNORE:?}: no such file or directory. skip."
@@ -46,7 +50,7 @@ done
 
 if [[ "${all-}" ]]; then
   Errorln "Found files that should gitignore are committed:"
-  all_formatted="$(echo "${all:?}" | sed "s/^/  - /")"
+  all_formatted="$(echo "${all:?}" | sort -u | sed "s/^/  - /")"
   Errorln "${all_formatted:?}"
   exit 1
 fi

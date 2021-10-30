@@ -19,5 +19,5 @@ runs:
   using: 'composite'
   steps:
     - name: Should gitignore
-      run: '${{github.action_path}}/main.sh ${{github.action_path}}/.gitignore ${{inputs.gitignores}}'
+      run: '${{github.action_path}}/main.sh ${{github.action_path}}/.gitignore .gitignore ${{inputs.gitignores}}'
       shell: 'bash'
