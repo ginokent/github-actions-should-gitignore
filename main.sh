@@ -28,17 +28,8 @@ for GITIGNORE in "${UNIQ[@]}"; do
     continue
   fi
 
-  # Compose arguments to be passed to the `ls-files` command.
-  declare -a files=()
-  while read -r LINE; do
-    files=("${files[@]}" "${LINE:?}")
-  done < <(grep -Ev "^[ \t]*$|^[ \t]*#" "${GITIGNORE:?}")
-
-  # shellcheck disable=SC2086
-  Debugln '$' git ls-files "${files[@]}"
-  # NOTE: Cannot use --ignored option with only --exclude-from option because errors occur: `fatal: ls-files -i must be used with either -o or -c`
-  # shellcheck disable=SC2086
-  output=$(git ls-files "${files[@]}")
+  Debugln '$' git ls-files --cached --ignored --exclude-from="${GITIGNORE:?}"
+  output=$(git ls-files --cached --ignored --exclude-from="${GITIGNORE:?}")
   printf "${output-}${output:+$'\n'}"
 
   # If there is any content in `output`,

@@ -22,7 +22,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - uses: newtstat/github-actions-should-gitignore@v1.0.1
+      - uses: newtstat/github-actions-should-gitignore@v1.0.2
         #with:
         #  gitignores: 'path/to/.gitignore path/to/2/.gitignore'
 ```
