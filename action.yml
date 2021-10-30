@@ -1,0 +1,23 @@
+# cf. Creating a composite action - GitHub Docs https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# cf. Metadata syntax for GitHub Actions - GitHub Docs https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs-for-composite-actions
+
+name: Should gitignore
+description: Check that no files that should `gitignore` are committed.
+author: 'newtstat'
+
+branding:
+  icon: search
+  color: gray-dark
+
+inputs:
+  gitignores:
+    description: gitignore file paths separated by space
+    required: false
+    default: '.gitignore'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Should gitignore
+      run: '${{github.action_path}}/main.sh ${{github.action_path}}/.gitignore ${{inputs.gitignores}}'
+      shell: 'bash'
