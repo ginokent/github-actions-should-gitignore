@@ -6,6 +6,8 @@ By default, `.DS_Store` and `Thumbs.db` and the files listed in .gitignore in th
 
 ## Example
 
+`vim .github/workflows/should-gitignore.yml`
+
 ```yml
 name: 'should-gitignore'
 
